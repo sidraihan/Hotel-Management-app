@@ -9,6 +9,14 @@ from django.contrib.auth.models import User
 
 
 # Create your models here.
+
+class RatingChoices(DjangoChoices):
+    ONE_STAR = ChoiceItem(1)
+    TWO_STAR = ChoiceItem(2)
+    THREE_STAR = ChoiceItem(3)
+    FOUR_STAR = ChoiceItem(4)
+    FIVE_STAR = ChoiceItem(5)
+
 class MenuItem(models.Model):
     name = models.CharField(max_length=50,null=False)
     price = models.IntegerField(default=0)
@@ -32,7 +40,6 @@ class Order(models.Model):
     bill = models.IntegerField(default=0)
     timestamp = models.DateTimeField(auto_now=False,auto_now_add=True)
     claimed_reward = models.BooleanField(default=False)
-    #quantity = ArrayField(models.IntegerField(default=0))
 
     def __str__(self):
         return str(self.order_id)
@@ -41,28 +48,16 @@ class Order(models.Model):
         return "RES" + str(self.id)
 
 
-
-class RatingChoices(DjangoChoices):
-    ONE_STAR = ChoiceItem(1)
-    TWO_STAR = ChoiceItem(2)
-    THREE_STAR = ChoiceItem(3)
-    FOUR_STAR = ChoiceItem(4)
-    FIVE_STAR = ChoiceItem(5)
-
 class CustomerReview(models.Model):
-    order_ref = models.ForeignKey('Order',on_delete=models.CASCADE)
-    menu_item = models.ForeignKey('MenuItem',on_delete=models.CASCADE)
+    order_ref = models.ForeignKey('Order',on_delete=models.CASCADE,null=True)
     review_text = models.TextField()
-    overall_rating = models.IntegerField(choices=RatingChoices.choices, validators=[RatingChoices.validator])
 
     def __str__(self):
-        return str(self.menu_item) + " has recieved a rating of " + str(self.overall_rating)
+        return str(self.review_text)
 
 class Reward(models.Model):
-    reward_value = models.IntegerField(default=0)
     mobile_no = models.IntegerField(blank=True)
     total_points = models.IntegerField(default=0)
-    reward_claimed = models.BooleanField(default=False)
     def __str__(self):
         return str(self.mobile_no)
 

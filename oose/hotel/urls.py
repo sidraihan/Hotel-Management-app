@@ -11,6 +11,7 @@ urlpatterns = [
     path('itemreview/', views.orderreview, name='review'),
     path('payment/', views.payment,name='pay'),
     path('payment_success/', views.assign_bonus,name='assign_bonus'),
+    path('review_success/',views.save_review,name='final')
 
 ]
 

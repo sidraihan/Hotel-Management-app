@@ -16,26 +16,14 @@
 
 </head>
 <body>
-<form action="{% url 'hotel:final' %}" method="POST">
+
 {% csrf_token %}
 
 	<div class="container">
     <h2>Welcome to The Renaissance Restaurant</h2>
     <hr>
-        <input type="hidden" name="orderid" value="{{ order_id }}">
-        <p>You ordered :</p>
+        Your review was successfully sent.Thank You!<br>
+        We will definately read your review and try to become better!
 
-        {% for each_item in order_items_list  %}
-        <b>{{ each_item }}</b><br>
-        {% endfor %}
-    <br>
-    <input type="text" placeholder="Write in brief about your experience" name="review_text" size="100">
-
-<br><br>
-
-<input type="submit" value="Give my feedback!" name="feedback" >
-</div>
-
-</form>
 </body>
 </html>

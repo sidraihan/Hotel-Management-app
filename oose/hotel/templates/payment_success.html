@@ -16,19 +16,26 @@
 
 </head>
 <body>
-<form action="">
+<form action="{% url 'hotel:review' %}" method="POST">
 {% csrf_token %}
 
 	<div class="container">
     <h2>Welcome to The Renaissance Restaurant</h2>
     <hr>
-
+        <input type="hidden" value="{{ order_id }}" name="orderid">
+        {{ order_id }}<br>
         <p>Your <b>{{ current_points }} points</b> has been added to you old tally!</p>
         <p>Total points for mobile number {{ mobile_no }} is <b>{{ total_points }}</b></p>
-
+        <hr>
+        <input type="submit" value="Write about my experience!" name="review">
 
 </div>
 </form>
+
+<center>
+    <br>
+    <button onclick="location.href = '{% url 'hotel:index' %}';">Click to return home!</button>
+</center>
 
 </body>
 </html>

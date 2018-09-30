@@ -1,4 +1,3 @@
-from drf_rw_serializers import generics, viewsets, mixins
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from rest_framework.decorators import api_view
@@ -14,7 +13,7 @@ from rest_framework.permissions import IsAdminUser
 from rest_framework import mixins
 
 from .forms import OrderForm
-from hotel.models import MenuItem, Order, Reward
+from hotel.models import MenuItem, Order, Reward, CustomerReview
 from django.views import generic
 from django.shortcuts import render,get_object_or_404
 from rest_framework import status, generics, permissions, viewsets, mixins, serializers, exceptions, filters
@@ -161,6 +160,7 @@ def orderdetails(request,id):
     }
     return render(request, 'reorderdetail.html', context)
 
+
 def orderreview(request):
     order_id = request.POST.get('orderid')
     order = get_object_or_404(Order,order_id=order_id)
@@ -174,7 +174,8 @@ def orderreview(request):
 
 
     context = {
-        'order_items_list' : order_items_list
+        'order_items_list' : order_items_list,
+        'order_id':order_id
     }
 
     return render(request,'review.html',context)
@@ -223,6 +224,7 @@ def assign_bonus(request):
             t_points = new_user.total_points
 
     context = {
+        'order_id' : order_id,
         'current_points':points,
         'mobile_no':number,
         'total_points':t_points
@@ -230,3 +232,13 @@ def assign_bonus(request):
 
     return render(request,'payment_success.html',context)
 
+def save_review(request):
+
+    order_id = request.POST.get('orderid')
+    feedback = request.POST.get('review_text')
+    order = Order.objects.get(order_id=order_id)
+    c = CustomerReview.objects.create(review_text=feedback)
+    c.order_ref = order
+    c.save()
+
+    return render(request,'final_page.html')

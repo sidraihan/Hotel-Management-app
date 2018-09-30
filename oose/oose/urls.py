@@ -20,5 +20,4 @@ from django.contrib import admin
 urlpatterns = [
     path('hotel/',include('hotel.urls')),
     url(r'^admin/', admin.site.urls),
-    path('example/',include('example_app.urls'))
 ]

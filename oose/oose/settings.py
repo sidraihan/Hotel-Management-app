@@ -33,7 +33,6 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     #'hotel.apps.HotelConfig',
-    'example_app',
     'django_extensions',
     'django.contrib.admin',
     'django.contrib.auth',
