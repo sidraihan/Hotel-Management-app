@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+	<title>List of entries</title>
+	<style type="text/css">
+		a{
+			text-decoration: none;
+			color: #a12343;
+		}
+
+		td{
+			color: #a12343;
+		}
+	</style>
+
+</head>
+<body>
+<form action="{% url 'hotel:assign_bonus'%}" method="POST">
+{% csrf_token %}
+
+	<div class="container">
+    <h2>Welcome to The Renaissance Restaurant</h2>
+    <hr>
+        <input type="hidden" name="orderid" value="{{ order_id }}">
+        <input type="hidden" name="bonus" value="{{ bonus }}">
+        <b>We have given you &nbsp;<u>{{ bonus }}</u> &nbsp;points!!</b>
+        <br>
+        <p>Please enter your mobile number to claim your bonus points</p>
+        <input type="number" minlength="10" maxlength="10" name="mobile" value="mobile">
+        <input type="submit" name="submitt" value="Proceed">
+
+
+</div>
+</form>
+
+</body>
+</html>

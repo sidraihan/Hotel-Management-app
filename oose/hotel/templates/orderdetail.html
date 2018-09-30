@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <title>Contents</title>
+</head>
+<body>
+<form action="{% url 'hotel:pay' %}" method="POST">
+{% csrf_token %}
+<h3>Order Successful!</h3>
+<b>Your order ID is:&nbsp; {{ order_id }}  </b>
+<input type="hidden" value="{{ order_id }}" name="orderid">
+<hr>
+
+Your order details are:
+
+<br><br>
+
+{% for a,b,c in zipped_data  %}
+
+    <b>{{ a }}&emsp;{{ c }}&emsp;---{{ b }}<br>
+    </b>
+{% endfor %}
+
+<p>Your bill is: &nbsp;<b><u>Rs. {{ bill  }}</u></b>  </p>
+<p>You also wanted the following modifications:<br><i><b><ul>{{ custom_food }}</ul></b></i></p>
+<hr>
+
+<p>We will prepare your delicious food as soon as possible.<br>
+Please enjoy your time!</p>
+
+<hr>
+<br>
+
+<p>Click the below button to proceed to pay and earn some <b>BONUS POINTS!!</b></p>
+<br>
+<input type="submit" name="pay" value="Proceed to pay">
+
+
+
+   <!-- <input type="submit" value="Write about my experience!" name="review" > -->
+</form>
+</body>
+</html>

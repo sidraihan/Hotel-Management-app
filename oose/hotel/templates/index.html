@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+	<title>List of entries</title>
+	<style type="text/css">
+		a{
+			text-decoration: none;
+			color: #a12343;
+		}
+
+		td{
+			color: #a12343;
+		}
+	</style>
+
+</head>
+<body>
+
+	<div class="container">
+    <h2>Welcome to The Renaissance Restaurant</h2>
+    <hr>
+    <form action="{% url 'hotel:ordersummary' %}" method="POST" >
+    {% csrf_token %}
+<h2 style="font-family: georgia">MENU</h2>
+    <hr>
+Our Renowned Items:
+    <br>
+    {% for s in special_items  %}
+    <b>{{ s }}</b><br>
+    {% endfor %}
+<hr>
+    <h4>Veg items:</h4>
+<table border="1">
+	<tr style="font-family: sans-serif;font-weight: bold;">
+	<td>Name&nbsp;</td>
+	<td>Price&emsp;&emsp;</td>
+	<td>&emsp;&emsp;</td>
+        <td>Quantity</td>
+    <td></td>
+	</tr>
+{%for obj in object_list%}
+
+<tr>
+    {% if obj.is_veg is True %}
+        <td><label><input type="checkbox" name="menuitems" id={{ obj.name }} value="{{obj.name}}">{{obj.name}}.&nbsp;</label></td>
+        <td><input type="hidden" name="itemprice" value="{{ obj.price }}">{{obj.price}}&emsp;&emsp;</td>
+	<td>{% if obj.is_new is True %}New Arrival!{% endif %}</td>
+        <td><input type="number" name="quantity" value="1" max="100"></td>
+
+    <td style="background-color:green;">&emsp;&emsp;</td>
+{% endif %}
+
+</tr>
+{%endfor%}
+</table>
+    <hr>
+    <h4>Non-Veg items:</h4>
+    <table border="1">
+	<tr style="font-family: sans-serif;font-weight: bold;">
+	<td>Name&nbsp;</td>
+	<td>Price&emsp;&emsp;</td>
+	<td>&emsp;&emsp;</td>
+        <td>Quantity</td>
+
+    <td></td>
+	</tr>
+{%for obj in object_list%}
+
+<tr>
+    {% if obj.is_veg is False %}
+        <td><label><input type="checkbox" name="menuitems" id="{{ obj.name }}" value="{{obj.name}}">{{obj.name}}.</label>&nbsp;</td>
+        <td><input type="hidden" name="itemprice" value="{{ obj.price }}">{{obj.price}}&emsp;&emsp;</td>
+	<td>{% if obj.is_new is True %}New Arrival!{% endif %}</td>
+        <td><input type="number" name="quantity" value="1"></td>
+
+
+    <td style="background-color:red;">&emsp;&emsp;</td>
+{% endif %}
+
+</tr>
+{%endfor%}
+</table>
+    <hr>
+    <fieldset>
+        <legend><b>Please specify if you want some customisations in your food!</b></legend>
+             Write here: <input type="text" name="custom" id="custom" size="50">&emsp;
+
+    </fieldset>
+
+
+
+    <br>
+    <input type="submit" name="orderitems" value="Place Order!" >
+
+
+
+</form>
+
+
+
+</div>
+
+
+<!--<script type="text/javascript" language="JavaScript">
+    function checkBill () {
+        var items = document.getElementsByName("menuitems");
+        var i, total = 0;
+        for (i = 0; i < items.length; i++) {
+            if (items[i].checked == true) {
+                total += parseInt(items[i].value,10);
+            }
+        }
+
+       alert("Your current bill would be: Rs."+total+" (tax excluded)");
+    }
+
+</script>
+-->
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Contents</title>
+</head>
+<body>
+<h3>Order Successful!</h3>
+<hr>
+
+Your order details are:
+
+<br><br>
+
+{% for a,b in zipped_data  %}
+
+    <b>{{ a }}&emsp;{{ b }}&emsp;<br>
+    </b>
+{% endfor %}
+
+
+
+<p>Your bill is: &nbsp;<b><u>Rs. {{ bill  }}</u></b>  </p>
+<p>You also wanted the following modifications:<br><i><b><ul>{{ custom_food }}</ul></b></i></p>
+<hr>
+
+<p>We will prepare your delicious food as soon as possible.<br>
+Please enjoy your time!</p>
+
+
+</body>
+</html>
