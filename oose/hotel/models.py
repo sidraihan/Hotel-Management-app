@@ -1,12 +1,5 @@
 from django.db import models
-#from moneyed import Money
 from djchoices import DjangoChoices, ChoiceItem
-#from phonenumber_field.modelfields import PhoneNumberField
-from django.contrib.auth.models import User
-
-
-
-
 
 # Create your models here.
 
@@ -33,7 +26,6 @@ class MenuItem(models.Model):
         ordering = ['-name','-price']
 
 class Order(models.Model):
-    #user = models.ForeignKey(User)
     order_id = models.CharField(max_length=100, blank=True, null=True)
     order_list = models.ManyToManyField('MenuItem',related_name="order_details")
     extra_comments = models.TextField(default=None)
@@ -43,9 +35,6 @@ class Order(models.Model):
 
     def __str__(self):
         return str(self.order_id)
-
-    def get_order_id(self):
-        return "RES" + str(self.id)
 
 
 class CustomerReview(models.Model):

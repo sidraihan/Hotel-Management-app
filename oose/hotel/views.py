@@ -1,31 +1,7 @@
-from django.http import HttpResponseRedirect
-from django.urls import reverse
-from rest_framework.decorators import api_view
-from django.http import HttpResponse,JsonResponse
-from django.views.decorators.csrf import csrf_exempt
-from rest_framework.renderers import JSONRenderer
-from rest_framework.parsers import JSONParser
+
 # Create your views here.
-from oauth2_provider.ext.rest_framework import OAuth2Authentication
-from django.contrib.auth.models import User
-from rest_framework import generics
-from rest_framework.permissions import IsAdminUser
-from rest_framework import mixins
-
-from .forms import OrderForm
 from hotel.models import MenuItem, Order, Reward, CustomerReview
-from django.views import generic
 from django.shortcuts import render,get_object_or_404
-from rest_framework import status, generics, permissions, viewsets, mixins, serializers, exceptions, filters
-from .serializers import *
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import status
-from django.http import Http404
-from rest_framework.renderers import TemplateHTMLRenderer
-from django.shortcuts import redirect
-
-
 
 
 """
