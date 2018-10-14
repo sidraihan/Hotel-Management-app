@@ -77,7 +77,32 @@ def ordersummary(request):
         comment = request.POST.get('custom')
         list_of_order_price = request.POST.getlist('itemprice')
         quantity = request.POST.getlist('quantity')
-        for_bill_zip = zip(list_of_order_items, quantity)
+        quantity_list =[]
+
+        for each in quantity:
+            if each != '':
+                quantity_list.append(each)
+                if int(each) <= 0:
+                    menu_items = MenuItem.objects.all()
+                    special_list = []
+                    for x in menu_items:
+                        special_list.append(x.order_times)
+
+                    spec = max(special_list)
+                    sending_list = []
+                    for c in menu_items:
+                        if c.order_times == spec:
+                            sending_list.append(c.name)
+
+                    return render(request, 'index.html', {
+                        'object_list': menu_items,
+                        'special_items':sending_list,
+                        'error_message': "You didn't select a valid quantity.",
+                    })
+
+
+
+        for_bill_zip = zip(list_of_order_items, quantity_list)
         total = 0
         price_list = []
         queryset = MenuItem.objects.all()
@@ -96,7 +121,7 @@ def ordersummary(request):
         p.save()
         order_id = p.order_id
 
-        zipped_list = zip(list_of_order_items, price_list, quantity)
+        zipped_list = zip(list_of_order_items, price_list, quantity_list)
 
         context = {
             'all_items': queryset,

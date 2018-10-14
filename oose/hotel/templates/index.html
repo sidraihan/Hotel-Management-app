@@ -18,9 +18,11 @@
 <body>
 
 	<div class="container">
+    <h1>{% if error_message %}<p style="color: red;font-family: 'Agency FB'" ><strong>{{ error_message }}</strong></p>{% endif %}
+</h1>
     <h2>Welcome to The Renaissance Restaurant</h2>
     <hr>
-    <form action="{% url 'hotel:ordersummary' %}" method="POST" >
+    <form action="{% url 'hotel:ordersummary' %}" method="POST" onsubmit="return checkQuantity()">
     {% csrf_token %}
 <h2 style="font-family: georgia">MENU</h2>
     <hr>
@@ -46,7 +48,7 @@ Our Renowned Items:
         <td><label><input type="checkbox" name="menuitems" id={{ obj.name }} value="{{obj.name}}">{{obj.name}}.&nbsp;</label></td>
         <td><input type="hidden" name="itemprice" value="{{ obj.price }}">{{obj.price}}&emsp;&emsp;</td>
 	<td>{% if obj.is_new is True %}New Arrival!{% endif %}</td>
-        <td><input type="number" name="quantity" value="1" max="100"></td>
+        <td><input type="number" name="quantity"></td>
 
     <td style="background-color:green;">&emsp;&emsp;</td>
 {% endif %}
@@ -72,7 +74,7 @@ Our Renowned Items:
         <td><label><input type="checkbox" name="menuitems" id="{{ obj.name }}" value="{{obj.name}}">{{obj.name}}.</label>&nbsp;</td>
         <td><input type="hidden" name="itemprice" value="{{ obj.price }}">{{obj.price}}&emsp;&emsp;</td>
 	<td>{% if obj.is_new is True %}New Arrival!{% endif %}</td>
-        <td><input type="number" name="quantity" value="1"></td>
+        <td><input type="number" name="quantity"></td>
 
 
     <td style="background-color:red;">&emsp;&emsp;</td>
@@ -102,20 +104,40 @@ Our Renowned Items:
 </div>
 
 
-<!--<script type="text/javascript" language="JavaScript">
-    function checkBill () {
+<script type="text/javascript" language="JavaScript">
+    function checkOrder () {
         var items = document.getElementsByName("menuitems");
-        var i, total = 0;
+        var i, total = 0,flag = 0;
         for (i = 0; i < items.length; i++) {
-            if (items[i].checked == true) {
-                total += parseInt(items[i].value,10);
+            if (items[i].checked == true)
+            {
+                flag = 1;
+                break;
             }
         }
+        if(flag=0)
+        {
+                alert("Please select at least one item!");
+        return false;
 
-       alert("Your current bill would be: Rs."+total+" (tax excluded)");
+        }
+    return true;
     }
+     function checkQuantity()
+     {
+         var quantities = document.getElementsByName('quantity');
+         var i;
+         for(i=0;i<quantities.length;i++)
+         {
+             if(i.value<0) {
+                 alert("Please select a valid quantity");
+                 break;
+             }
+         }
+     }
+
 
 </script>
--->
+
 </body>
 </html>
