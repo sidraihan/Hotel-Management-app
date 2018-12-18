@@ -1,5 +1,7 @@
 from django.db import models
 from djchoices import DjangoChoices, ChoiceItem
+from django.urls import reverse
+
 
 # Create your models here.
 
@@ -17,6 +19,10 @@ class MenuItem(models.Model):
     is_veg = models.BooleanField(verbose_name='Tick if the food item is vegeterian', default=False)
     is_active = models.BooleanField(default=True)
     order_times = models.IntegerField(default=0)
+
+    def get_absolute_url(self):
+        error_message = "You didnt select a valid quantity."
+        return reverse('views.menu', args=[error_message])
 
 
     def __str__(self):

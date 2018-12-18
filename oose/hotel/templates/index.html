@@ -17,91 +17,136 @@
 </head>
 <body>
 
-	<div class="container">
-    <h1>{% if error_message %}<p style="color: red;font-family: 'Agency FB'" ><strong>{{ error_message }}</strong></p>{% endif %}
-</h1>
-    <h2>Welcome to The Renaissance Restaurant</h2>
-    <hr>
-    <form action="{% url 'hotel:ordersummary' %}" method="POST" onsubmit="return checkQuantity()">
+    <nav class="navbar navbar-default navbar-light bg-dark navbar-fixed-top">
+  <div class="container" style="padding-left: 25%">
+    <font color="white"><h2 >The Rennaisance Restaurant</h2></font>
+  </div><br>
+
+    <div class="container" style="padding-left: 30%">
+    <font color="white"><h4>Checkout Today's Menu</h4></font>
+
+  </div>
+  {% if error_message %}
+  <div class="container" style="margin-left: 33%" align="center">
+        
+        
+        <p style="color: red;font-family: 'Agency FB';   font-size: 200%;" ><strong>{{ error_message }}</strong></p>
+       
+        
+    </div>
+     {% endif %}    
+</nav>
+    
+
+    <form action="{% url 'hotel:ordersummary' %}" method="POST" >
     {% csrf_token %}
-<h2 style="font-family: georgia">MENU</h2>
+<div style="background-color: #212529">
+ <span  class="badge badge-danger" align="center" style="margin-left: 38%"><h2>Popular Dishes</h2>{% for s in special_items  %}
+    <li><b>{{ s }}</b></li><br>
+    {% endfor %}</span>   
+
+    
+   
+
+</div> 
+<div class="progress">
+  <div class="progress-bar bg-warning" role="progressbar" style="width: 25%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">25%</div>
+</div>
+<br>
+    <h4 align="center">Veg items:</h4><br>
+
+<div class="container">
+
+    <div  style="margin-left: 10%" class="row">
+
+
+
+
+
+                {%for obj in object_list%}
+                    {% if obj.is_veg is True %}
+                <div class="col-sm-4">
+                    <div class="card" style="width: 18rem; height: 15rem">
+                            <img class="card-img-top" src="" alt="">
+                            <div class="card-body">
+                                <label><h5 class="card-title">{{ obj.name }}</h5></label><button type="button" class="btn btn-success"></button>
+                                <p class="card-text">Price:{{obj.price}}</p>
+                                {% if obj.is_new is True %}
+                                <p>New Arrival!</p>
+                                {% endif %}
+                                 Quantity:<input type="number" name="quantity"  max="100"><br><br> <div style=" padding-left: -1.5em"  custom-checkbox">
+                                        <input type="checkbox"  name="menuitems" id="{{ obj.name }}" value="{{obj.name}}">
+                                        <label >Select This Dish:</label>
+                                    </div>
+                            </div>
+                    </div>
+                </div>
+                {% endif %}
+            {% endfor %}
+    </div>
+
+
+</div>
+
+
+
     <hr>
-Our Renowned Items:
-    <br>
-    {% for s in special_items  %}
-    <b>{{ s }}</b><br>
-    {% endfor %}
-<hr>
-    <h4>Veg items:</h4>
-<table border="1">
-	<tr style="font-family: sans-serif;font-weight: bold;">
-	<td>Name&nbsp;</td>
-	<td>Price&emsp;&emsp;</td>
-	<td>&emsp;&emsp;</td>
-        <td>Quantity</td>
-    <td></td>
-	</tr>
-{%for obj in object_list%}
+    <h4 align="center">Non-Veg items:</h4>
+<div class="container">
 
-<tr>
-    {% if obj.is_veg is True %}
-        <td><label><input type="checkbox" name="menuitems" id={{ obj.name }} value="{{obj.name}}">{{obj.name}}.&nbsp;</label></td>
-        <td><input type="hidden" name="itemprice" value="{{ obj.price }}">{{obj.price}}&emsp;&emsp;</td>
-	<td>{% if obj.is_new is True %}New Arrival!{% endif %}</td>
-        <td><input type="number" name="quantity"></td>
-
-    <td style="background-color:green;">&emsp;&emsp;</td>
-{% endif %}
-
-</tr>
-{%endfor%}
-</table>
-    <hr>
-    <h4>Non-Veg items:</h4>
-    <table border="1">
-	<tr style="font-family: sans-serif;font-weight: bold;">
-	<td>Name&nbsp;</td>
-	<td>Price&emsp;&emsp;</td>
-	<td>&emsp;&emsp;</td>
-        <td>Quantity</td>
-
-    <td></td>
-	</tr>
-{%for obj in object_list%}
-
-<tr>
-    {% if obj.is_veg is False %}
-        <td><label><input type="checkbox" name="menuitems" id="{{ obj.name }}" value="{{obj.name}}">{{obj.name}}.</label>&nbsp;</td>
-        <td><input type="hidden" name="itemprice" value="{{ obj.price }}">{{obj.price}}&emsp;&emsp;</td>
-	<td>{% if obj.is_new is True %}New Arrival!{% endif %}</td>
-        <td><input type="number" name="quantity"></td>
+    <div  style="margin-left: 10%" class="row">
 
 
-    <td style="background-color:red;">&emsp;&emsp;</td>
-{% endif %}
 
-</tr>
-{%endfor%}
-</table>
-    <hr>
-    <fieldset>
+
+
+                {%for obj in object_list%}
+                    {% if obj.is_veg is False %}
+                <div class="col-sm-4">
+                    <div class="card" style="width: 18rem;height: 15rem">
+                            <img class="card-img-top" src="" alt="">
+                            <div class="card-body">
+                                <label><h5 class="card-title">{{ obj.name }}</h5></label><button type="button" class="btn btn-danger"></button>
+                                <p class="card-text">Price:{{obj.price}}</p>
+                                {% if obj.is_new is True %}
+                                <p>New Arrival!</p>
+                                {% endif %}
+                               Quantity:<input type="number" name="quantity"  max="100"><br><br>
+                               <div style=" padding-left: -1.5em"  custom-checkbox">
+                                        <input type="checkbox"  name="menuitems" id="{{ obj.name }}" value="{{obj.name}}">
+                                        <label >Select This Dish:</label>
+                                    </div>
+                            </div>
+                    </div>
+                </div>
+                {% endif %}
+            {% endfor %}
+    </div>
+
+
+</div>
+
+  
+    <div align="center">
+    <fieldset >
         <legend><b>Please specify if you want some customisations in your food!</b></legend>
              Write here: <input type="text" name="custom" id="custom" size="50">&emsp;
 
     </fieldset>
+<br>
+<button type="submit" class="btn btn-dark" name="orderitems" value="Place Order!">PlaceOrder!</button>
+</div>
 
 
-
-    <br>
-    <input type="submit" name="orderitems" value="Place Order!" >
-
+   
+  
 
 
 </form>
 
 
 
-</div>
+
 
 
 <script type="text/javascript" language="JavaScript">
@@ -138,6 +183,5 @@ Our Renowned Items:
 
 
 </script>
-
 </body>
 </html>

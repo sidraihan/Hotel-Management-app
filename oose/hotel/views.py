@@ -2,6 +2,9 @@
 # Create your views here.
 from hotel.models import MenuItem, Order, Reward, CustomerReview
 from django.shortcuts import render,get_object_or_404
+from django.shortcuts import redirect
+from django.urls import reverse
+
 
 
 """
@@ -48,6 +51,7 @@ def orderdetails(request):
     return render(request,'orderdetail.html',context)
 
 """
+
 def menu(request):
 
     # else,If this is a GET (or any other method) display the menu.
@@ -77,23 +81,37 @@ def ordersummary(request):
         comment = request.POST.get('custom')
         list_of_order_price = request.POST.getlist('itemprice')
         quantity = request.POST.getlist('quantity')
+        menu_items = MenuItem.objects.all()
+        special_list = []
+        flag=0
+        for x in menu_items:
+            special_list.append(x.order_times)
+
+        spec = max(special_list)
+        sending_list = []
+        for c in menu_items:
+            if c.order_times == spec:
+                sending_list.append(c.name)
+                flag = 0
+        for aa in quantity:
+            if aa == '':
+                continue
+            else:
+                flag = 1
+                break
+        if flag == 0:
+            return render(request, 'index.html', {
+                'object_list': menu_items,
+                'special_items': sending_list,
+                'error_message': "You are sending an empty order!You sure don't wanna have anything? ;)",
+            })
+
         quantity_list =[]
 
         for each in quantity:
             if each != '':
                 quantity_list.append(each)
                 if int(each) <= 0:
-                    menu_items = MenuItem.objects.all()
-                    special_list = []
-                    for x in menu_items:
-                        special_list.append(x.order_times)
-
-                    spec = max(special_list)
-                    sending_list = []
-                    for c in menu_items:
-                        if c.order_times == spec:
-                            sending_list.append(c.name)
-
                     return render(request, 'index.html', {
                         'object_list': menu_items,
                         'special_items':sending_list,

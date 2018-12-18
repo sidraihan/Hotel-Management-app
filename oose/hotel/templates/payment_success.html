@@ -19,22 +19,34 @@
 <form action="{% url 'hotel:review' %}" method="POST">
 {% csrf_token %}
 
-	<div class="container">
-    <h2>Welcome to The Renaissance Restaurant</h2>
-    <hr>
-        <input type="hidden" value="{{ order_id }}" name="orderid">
-        {{ order_id }}<br>
-        <p>Your <b>{{ current_points }} points</b> has been added to you old tally!</p>
-        <p>Total points for mobile number {{ mobile_no }} is <b>{{ total_points }}</b></p>
-        <hr>
-        <input type="submit" value="Write about my experience!" name="review">
+	
+	 <nav class="navbar navbar-default navbar-light bg-dark navbar-fixed-top">
+  <div class="container" style="padding-left: 25%">
+    <font color="white"><h2 >The Rennaisance Restaurant</h2></font>
+  </div><br>
+</nav>
 
+
+<div class="progress">
+  <div class="progress-bar bg-warning" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">100%</div>
+</div>
+    <br>
+    <p align="center">
+        <input type="hidden" value="{{ order_id }}" name="orderid">Order Id:<b>
+        {{ order_id }}</b><br>
+        <p align="center">Your <b>{{ current_points }} points</b> has been added to you old tally!</p>
+        <p align="center">Total points for mobile number {{ mobile_no }} is <b>{{ total_points }}</b></p>
+        <br>
+        <p align="center">
+         <button  type="submit" class="btn btn-dark" name="review" value="Write about my experience!">Write about my experience!</button>
+       </p>
+    </p>
 </div>
 </form>
 
 <center>
     <br>
-    <button onclick="location.href = '{% url 'hotel:index' %}';">Click to return home!</button>
+    <button class="btn btn-dark"  onclick="location.href = '{% url 'hotel:index' %}';">Click to return home!</button>
 </center>
 
 </body>

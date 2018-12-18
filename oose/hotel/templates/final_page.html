@@ -19,15 +19,19 @@
 
 {% csrf_token %}
 
-	<div class="container">
-    <h2>Welcome to The Renaissance Restaurant</h2>
-    <hr>
-        Your review was successfully sent.Thank You!<br>
-        We will definately read your review and try to become better!
-        <br>
-        <center>
-        <button onclick="location.href = '{% url 'hotel:index' %}';">Click to return home!</button>
-            </center>
-    </div>
+	 <nav class="navbar navbar-default navbar-light bg-dark navbar-fixed-top">
+  <div class="container" style="padding-left: 25%">
+    <font color="white"><h2 >The Rennaisance Restaurant</h2></font>
+  </div><br>
+    </nav>
+    <p align="center">Your review was successfully sent.Thank You!<br>
+        We will definitely read your review and try to become better!
+    </p>
+        
+  <center>
+    <br>
+    <button class="btn btn-dark"  onclick="location.href = '{% url 'hotel:index' %}';">Click to return home!</button>
+</center>
+
 </body>
 </html>
